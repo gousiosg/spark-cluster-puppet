@@ -1,0 +1,12 @@
+127.0.0.1	localhost
+131.180.125.115		bdp1.ewi.tudelft.nl	bdp1
+131.180.125.116		bdp2.ewi.tudelft.nl	bdp2
+131.180.125.117		bdp3.ewi.tudelft.nl	bdp3
+131.180.125.118		bdp4.ewi.tudelft.nl	bdp4
+131.180.125.119		bdp5.ewi.tudelft.nl	bdp5
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+EOT1
