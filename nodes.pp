@@ -143,13 +143,36 @@ node 'bdp1.ewi.tudelft.nl' {
   file { "/home/gousiosg/spark/conf/spark-env.sh":
     source => "/home/gousiosg/cluster/files/spark-env-master.sh"
   }
+
+  package { 'nginx' : ensure => 'present'}
+
+  package { 'ipython' : ensure => '5.4', provider => pip } ->
+  package { 'jupyter' : ensure => present, provider => pip } ->
+  package { 'toree' : ensure => present, provider => pip }
+
+#  $toree_dirname = 'spark-2.2.0-bin-hadoop2.7'
+#  $toree_filename = "${spark_dirname}.tgz"
+#  $install_path = "/home/gousiosg/"
+#
+#  archive { $toree_dirname:
+#    ensure => present,
+#    path   => "/tmp/${toree_filename}",
+#    source =>
+#    "http://ftp.tudelft.nl/apache/incubator/toree/0.1.0-incubating/toree-bin/apache-toree-0.1.0-incubating-binary-release.tar.gz",
+#    extract      => true,
+#    extract_path => $install_path,
+#    creates      => "$install_path/$spark_dirname/bin",
+#    cleanup      => true,
+#    user         => 'gousiosg',
+#    group        => 'gousiosg',
+#  }
 }
 
 node /bdp[2-5]\.ewi\.tudelft\.nl/ {
   include defaults
 
-  file { "/home/gousiosg/spark/conf/spark-env.sh":
-    source => "/home/gousiosg/cluster/files/spark-env-slave.sh"
-  }
+    file { "/home/gousiosg/spark/conf/spark-env.sh":
+      source => "/home/gousiosg/cluster/files/spark-env-slave.sh"
+    }
 }
 
