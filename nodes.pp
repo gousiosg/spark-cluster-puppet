@@ -10,7 +10,6 @@ class defaults {
   package { 'dnsutils' : ensure => present }
   package { 'htop' : ensure => present }
   package { 'nmon' : ensure => present }
-  package { 'pssh' : ensure => present }
   package { 'python-pip' : ensure => present }
   package { 'python-tk' : ensure => present }
   package { 'gfortran': ensure => present}
@@ -78,8 +77,7 @@ class defaults {
   archive { $hadoop_filename:
     ensure => present,
     path   => "/tmp/${hadoop_filename}",
-    source =>
-    "http://apache.40b.nl/hadoop/common/hadoop-2.7.4/hadoop-2.7.4.tar.gz",
+    source => "http://apache.40b.nl/hadoop/common/hadoop-2.7.4/hadoop-2.7.4.tar.gz",
     extract      => true,
     extract_path => $install_path,
     creates      => "$install_path/$hadoop_dirname/bin",
@@ -125,11 +123,6 @@ class defaults {
     source => "/home/gousiosg/cluster/files/hosts"
   }
 
- file { '/usr/bin/pssh':
-    ensure => 'link',
-    target => "/usr/bin/parallel-ssh"
-  }
-
 }
 
 node 'bdp1.ewi.tudelft.nl' {
@@ -145,13 +138,17 @@ node 'bdp1.ewi.tudelft.nl' {
     source => "/home/gousiosg/cluster/files/spark-env-master.sh"
   }
 
+  # Jupyter stack
   package { 'scala' : ensure => 'present'}
-
-  package { 'ipython' : ensure => '5.4.0', provider => pip } ->
-  package { 'jupyter' : ensure => present, provider => pip } ->
+  package { 'ipython' : ensure => '5.4.0', provider => pip }
+  package { 'jupyter' : ensure => present, provider => pip }
+  # This does not work currently
+  # See instructions on how to manually install toree here
+  #  
+  package { 'toree' : ensure => 'v0.2.0-incubating-rc1', provider => pip }
 
   package { 'nginx' : ensure => present}
-  
+
   file { "/etc/nginx/sites-available/bdp1.ewi.tudelft.nl.conf":
     source => "/home/gousiosg/cluster/files/bdp1.ewi.tudelft.nl.conf"
   }
