@@ -12,11 +12,12 @@ class defaults {
   package { 'nmon' : ensure => present }
   package { 'pssh' : ensure => present }
   package { 'python-pip' : ensure => present }
+  package { 'python-tk' : ensure => present }
+  package { 'gfortran': ensure => present}
   package { 'numpy' : ensure => present, provider => pip }
   package { 'pandas' : ensure => present, provider => pip }
   package { 'matplotlib' : ensure => present, provider => pip }
   package { 'ggplot' : ensure => present, provider => pip }
-
 
   apt::ppa { 'ppa:webupd8team/java': }
   exec { 'accept_oracle_java_license':
@@ -148,7 +149,6 @@ node 'bdp1.ewi.tudelft.nl' {
 
   package { 'ipython' : ensure => '5.4.0', provider => pip } ->
   package { 'jupyter' : ensure => present, provider => pip } ->
-  package { 'toree' : ensure => present, provider => pip }
 
   package { 'nginx' : ensure => present}
   
