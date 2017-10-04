@@ -144,28 +144,22 @@ node 'bdp1.ewi.tudelft.nl' {
     source => "/home/gousiosg/cluster/files/spark-env-master.sh"
   }
 
-  package { 'nginx' : ensure => 'present'}
+  package { 'scala' : ensure => 'present'}
 
-  package { 'ipython' : ensure => '5.4', provider => pip } ->
+  package { 'ipython' : ensure => '5.4.0', provider => pip } ->
   package { 'jupyter' : ensure => present, provider => pip } ->
   package { 'toree' : ensure => present, provider => pip }
 
-#  $toree_dirname = 'spark-2.2.0-bin-hadoop2.7'
-#  $toree_filename = "${spark_dirname}.tgz"
-#  $install_path = "/home/gousiosg/"
-#
-#  archive { $toree_dirname:
-#    ensure => present,
-#    path   => "/tmp/${toree_filename}",
-#    source =>
-#    "http://ftp.tudelft.nl/apache/incubator/toree/0.1.0-incubating/toree-bin/apache-toree-0.1.0-incubating-binary-release.tar.gz",
-#    extract      => true,
-#    extract_path => $install_path,
-#    creates      => "$install_path/$spark_dirname/bin",
-#    cleanup      => true,
-#    user         => 'gousiosg',
-#    group        => 'gousiosg',
-#  }
+  package { 'nginx' : ensure => present}
+  
+  file { "/etc/nginx/sites-available/bdp1.ewi.tudelft.nl.conf":
+    source => "/home/gousiosg/cluster/files/bdp1.ewi.tudelft.nl.conf"
+  }
+
+  file { '/etc/nginx/sites-enabled/bdp1.ewi.tudelft.nl.conf':
+    ensure => 'link',
+    target => "/etc/nginx/sites-available/bdp1.ewi.tudelft.nl.conf",
+  }
 }
 
 node /bdp[2-5]\.ewi\.tudelft\.nl/ {
