@@ -144,9 +144,11 @@ node 'bdp1.ewi.tudelft.nl' {
   package { 'jupyter' : ensure => present, provider => pip }
   # This does not work currently
   # See instructions on how to manually install toree here
-  #  
-  package { 'toree' : ensure => 'v0.2.0-incubating-rc1', provider => pip }
-
+  #
+  #package { 'toree' : ensure => 'v0.2.0-incubating-rc1', provider => pip }
+  exec{ "install toree":
+    command => "/usr/local/bin/jupyter toree install --interpreters=Scala,PySpark --spark_opts='--master spark://bdp1:7077 --executor-memory 1G --total-executor-cores=4' --spark_home=/home/gousiosg/spark"
+  }
   package { 'nginx' : ensure => present}
 
   file { "/etc/nginx/sites-available/bdp1.ewi.tudelft.nl.conf":
